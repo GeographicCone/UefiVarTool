@@ -188,6 +188,13 @@ Where `<VarName>`, `<Offset>` and `<Size>` have the same interpretation as discu
 Language,Lang:0x00(4)
 ````
 
+Note that any amount of whitespace can appear on either side of the `,` comma separator, which allows for better legibility in script formatting. For example:
+
+````
+Language9 ,  Lang:0x09
+Language10,  Lang:0x0a
+````
+
 The syntax for _operations_ in the input stream is extended to include the following:
 
 ````
@@ -403,4 +410,6 @@ Please also note that the files in the `extra` directory are not covered by the 
 * Provide more detailed and meaningful error messages when encountering errors throughout the application, particularly parsing errors
 * Dynamically update the application executable image name when displaying usage information
 * Add the functionality that references can also be used for read operations, which originally resulted in a (perhaps unintended) parse error
+* Allow whitespace in a _definition_ on each side of the `,` comma separator, which provides for better legibility in script formatting
 * Update the `uefi` and `uefi_services` external package dependencies to their latest versions
+* Will now default to showing usage information on parser errors (but not other errors)
