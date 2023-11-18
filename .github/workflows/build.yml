@@ -1,0 +1,82 @@
+#
+#           -|-
+#  |   ||   /|   UEFI Variable Tool (UVT) * Build Workflow
+#  |   ||  / |   https://github.com/GeographicCone/UefiVarTool
+#  `---'`-'  `-  Copyright © 2022 Datasone, © 2023 Piotr Szczepański
+#
+# Builds the application with the specified version data
+
+name: "UVT Build"
+run-name: "UEFI Variable Tool (UVT) Build by ${{ github.actor }}"
+
+on:
+  workflow_call:
+    inputs:
+      version_number:
+        description: "Version number (three dot-separated non-negative integers)"
+        required: true
+        type: string
+      version_word:
+        default: "Snapshot"
+        description: "Build type (Preview, Release, Snapshot)"
+        required: false
+        type: string
+
+  workflow_dispatch:
+    inputs:
+      version_number:
+        default: "0.0.0"
+        description: "Version number"
+        required: true
+        type: string
+      version_word:
+        default: "Snapshot"
+        description: "Build type"
+        options:
+          - "Preview"
+          - "Release"
+          - "Snapshot"
+        required: true
+        type: choice
+
+env: 
+  CARGO_BUILD_TARGET: x86_64-unknown-uefi
+  CARGO_TERM_COLOR: always
+  CARGO_TOML: Cargo.toml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: "Build UVT"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        profile: ["release"]
+
+    steps:
+    - name: "Checkout UVT"
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - name: "Select Target"
+      working-directory: ${{ github.workspace }}
+      run: rustup target add "${{ env.CARGO_BUILD_TARGET }}" && rustup target default "${{ env.CARGO_BUILD_TARGET }}"
+
+    - name: "Update Version Number"
+      working-directory: ${{ github.workspace }}
+      run: sed -e 's/^version = "0.0.0".*$/version = "${{ inputs.version_number }}" # Automatically overriden/' -i "${{ env.CARGO_TOML }}"
+
+    - name: "Run Cargo Build"
+      working-directory: ${{ github.workspace }}
+      run: BUILD_TYPE=${{ inputs.version_word }} cargo build --profile ${{ matrix.profile }} --verbose
+
+    - name: "Upload UVT"
+      uses: actions/upload-artifact@v3
+      with:
+        if-no-files-found: error
+        name: ${{ github.event.repository.name }}
+        path: target/${{ env.CARGO_BUILD_TARGET }}/${{ matrix.profile }}/${{ vars.BIN_FILE }}
