@@ -1,0 +1,5 @@
+# UEFI Variable Tool (UVT)
+# Git Ignored Files
+
+# Build Output
+target/
