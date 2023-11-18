@@ -1,0 +1,59 @@
+#
+#           -|-
+#  |   ||   /|   UEFI Variable Tool (UVT) * Package Metadata
+#  |   ||  / |   https://github.com/GeographicCone/UefiVarTool
+#  `---'`-'  `-  Copyright © 2022 Datasone, © 2023 Piotr Szczepański
+#
+
+[dependencies]
+log = "0.4"
+uefi = { version = "0.26", features = ["alloc", "global_allocator"] }
+uefi-services = "0.23"
+
+[package]
+autobenches = false
+autobins = false
+autoexamples = false
+autotests = false
+description = "UEFI Variable Tool"
+documentation = "https://github.com/GeographicCone/UefiVarTool/"
+edition = "2021"
+homepage = "https://github.com/GeographicCone/UefiVarTool/"
+keywords = ["bios", "efi", "uefi", "varstore"]
+license-file = "LICENSE.md"
+name = "uvt"
+publish = false
+readme = "README.md"
+repository = "https://github.com/GeographicCone/UefiVarTool/"
+version = "0.0.0" # Override in an automated workflow
+
+[package.metadata]
+
+[profile.dev]
+codegen-units = 256
+debug = "full"
+debug-assertions = true
+incremental = true
+lto = "off"
+opt-level = 0
+overflow-checks = true
+panic = "unwind"
+strip = "none"
+
+[profile.release]
+codegen-units = 1
+debug = "none"
+debug-assertions = false
+incremental = false
+lto = "fat"
+opt-level = "s"
+overflow-checks = false
+panic = "unwind"
+strip = "symbols"
+
+[[bin]]
+bench = false
+doc = false
+name = "uvt"
+path = "src/main.rs"
+test = false
