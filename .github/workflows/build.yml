@@ -62,9 +62,9 @@ jobs:
       with:
         fetch-depth: 1
 
-    - name: "Select Target"
+    - name: "Add Target"
       working-directory: ${{ github.workspace }}
-      run: rustup target add "${{ env.CARGO_BUILD_TARGET }}" && rustup target default "${{ env.CARGO_BUILD_TARGET }}"
+      run: rustup target add "${{ env.CARGO_BUILD_TARGET }}"
 
     - name: "Update Version Number"
       working-directory: ${{ github.workspace }}
