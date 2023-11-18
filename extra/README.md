@@ -17,7 +17,7 @@ None of them are required for the application to work, nor does the absence of a
 * Artwork designed in [Inkscape](https://inkscape.org/)
 * Typefaces used:
   * [Iosevka](https://be5invis.github.io/Iosevka) by [Renzhi Li](https://typeof.net/) (aka Belleve Invis)
-  * [Charis SIL](https://software.sil.org/charis/) by [SIL International(https://www.sil.org/)
+  * [Charis SIL](https://software.sil.org/charis/) by [SIL International](https://www.sil.org/)
   * Both available under the terms of the [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
 
 _For information about **UEFI Variable Tool (UVT)**, see the file `README.md` in the parent directory._
