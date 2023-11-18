@@ -44,7 +44,14 @@ jobs:
       run: zip -9 -r UVT.zip ./*
 
     - name: "Create Archive Comment"
-      run: "cat >UVT.zip.txt <<EOF\n@ (zip file comment below this line)\n           -|-\n  |   ||   /|   UEFI Variable Tool (UVT)\n  |   ||  / |   ${{ github.event.release.tag_name }}-${{ github.event.release.prerelease && 'Preview' || 'Release' }} * $(date -u +\"%Y-%m-%d %H:%M\") UTC\n  `---'`-'  `-  https://github.com/GeographicCone/UefiVarTool\nEOF\n"
+      run: |
+        cat >UVT.zip.txt <<EOF
+        @ (zip file comment below this line)
+                   -|-
+          |   ||   /|   UEFI Variable Tool (UVT)
+          |   ||  / |   ${{ github.event.release.tag_name }}-${{ github.event.release.prerelease && 'Preview' || 'Release' }} * $(date -u +"%Y-%m-%d %H:%M") UTC
+          \`---'\`-'  \`-  https://github.com/GeographicCone/UefiVarTool
+        EOF
 
     - name: "Add Comment to Archive"
       run: zipnote -b . -w UVT.zip < UVT.zip.txt
