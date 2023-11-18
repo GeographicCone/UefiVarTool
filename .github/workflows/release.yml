@@ -1,0 +1,67 @@
+#
+#           -|-
+#  |   ||   /|   UEFI Variable Tool (UVT) * Release Workflow
+#  |   ||  / |   https://github.com/GeographicCone/UefiVarTool
+#  `---'`-'  `-  Copyright © 2022 Datasone, © 2023 Piotr Szczepański
+#
+# Triggers a build and uploads artifacts as release assets
+
+name: "UVT Release"
+run-name: "UEFI Variable Tool (UVT) Release by ${{ github.actor }}"
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  call-build:
+    name: "Call Build"
+    secrets: inherit
+    uses: ./.github/workflows/build.yml
+    with:
+      version_number: ${{ github.event.release.tag_name }}
+      version_word: ${{ github.event.release.prerelease && 'Preview' || 'Release' }}
+
+  release:
+    name: "Release UVT"
+    needs: call-build
+    runs-on: ubuntu-latest
+
+    steps:
+    - id: download
+      name: "Download Artifacts"
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ github.event.repository.name }}
+
+    - name: 'List Artifacts'
+      run: ls -1R ${{ steps.download.outputs.download-path }}
+
+    - name: "Create Archive"
+      run: zip -9 -r UVT.zip ./*
+
+    - name: "Create Archive Comment"
+      run: |
+        cat >UVT.zip.txt <<EOF
+        @ (zip file comment below this line)
+                   -|-
+          |   ||   /|   UEFI Variable Tool (UVT)
+          |   ||  / |   ${{ github.event.release.tag_name }}-${{ github.event.release.prerelease && 'Preview' || 'Release' }} * $(date -u +"%Y-%m-%d %H:%M") UTC
+          `---'`-'  `-  https://github.com/GeographicCone/UefiVarTool
+        EOF
+
+    - name: "Add Comment to Archive"
+      run: zipnote -b . -w UVT.zip < UVT.zip.txt
+
+    - name: "Upload UVT Assets"
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./UVT.zip
+        asset_name: UefiVarTool-${{ github.event.release.tag_name }}-${{ github.event.release.prerelease && 'Preview' || 'Release' }}.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
