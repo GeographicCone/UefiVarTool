@@ -201,7 +201,7 @@ pub fn get_value(system_table: &SystemTable<Boot>,
 
     // If the specified variable is too short
     // to hold data at given offset and length
-    if offset + length > var.content.len() {
+    if offset + length - 1 > var.content.len() {
 
         // Return an error
         return Err(
