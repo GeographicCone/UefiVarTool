@@ -45,7 +45,7 @@ pub enum AppError {
     InputDefSet(String),
     InputNone,
     InputOpt(String),
-    //InputRead,           // uefi_op::read_stream()
+    //InputRead,           // firmware::read_stream()
     InputRef(String),
     InputRefNone(String),
 

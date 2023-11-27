@@ -4,7 +4,7 @@
 //  |   ||  / |   https://github.com/GeographicCone/UefiVarTool
 //  `---'`-'  `-  Copyright © 2022 Datasone, © 2023 Piotr Szczepański
 
-// Stores translateable user interface messages
+// Stores translatable user interface messages
 
 // To translate, copy this file as locale_XX.rs.
 // where XX is a two-letter ISO 639-1 language code,

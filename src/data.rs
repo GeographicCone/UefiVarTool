@@ -189,8 +189,6 @@ impl Args {
 #[derive(Debug)]
 pub enum InputEntry {
 
-    //ArgOperation(ArgOperation),
-    //ArgOption(ArgOption),
     Operation(ArgOperation),  // Get or set a given UEFI value
     Option(ArgOption),        // Set state in application scope
 
