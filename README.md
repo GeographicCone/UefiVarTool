@@ -29,7 +29,7 @@ Where:
 <Options>: Optional global-scope application settings
   -f --force     Force-write values even if already set as requested
   -h --help      Show usage information (precludes other operations)
-  -r --restart   Upon succesful completion, perform a system restart
+  -r --restart   Upon successful completion, perform a system restart
   -s --simulate  Do not write, only simulate actions (will still read)
 <Op#>: Operation(s) to perform, can be multiple, each in the format:
   <VarName>[(<VarId>)]:<Offset>[(<Size>)][=<Value>]
@@ -77,7 +77,7 @@ There are two ways to use **UVT**. The first one is to run it with command-line 
 _Options_ start with a `-` (minus) sign and are used to define global-scope settings. Each option has a short and a long form, taking a single `-` and a letter or a double `--` and a keyword respectively. The options are:
 * `-f` or `--force` Force-write values where the current values is equal to the new one. The default behavior is to skip such operations, and annotate such entries with an `# Already` comment in the output.
 * `-h` or `--help` Shows the usage information. If this option is selected, no other operations will be performed.
-* `-r` or `--restart` Reboots the system upon succesful completion. No restart will be performed if any of the operations failed.
+* `-r` or `--restart` Reboots the system upon successful completion. No restart will be performed if any of the operations failed.
 * `-s` or `--simulate` If set, no changes will be made to UEFI variables. All the other aspects of the application will still be functioning exactly in the same way. This might be useful for checking what an operation would do, or whether the arguments are syntactically correct. If `-f` or `--force` is specified together with this option, no writing will happen regardless: the simulation takes precedence.
 
 #### Operations
@@ -401,7 +401,7 @@ Please also note that the files in the `extra` directory are not covered by the 
 * Provide the option for user interface messages to be localized (translated) to different languages
 * Fix the issue where the application would try to parse its own name as the first argument and fail unless the `.efi` extension in lower case was explicitly specified as part of the command line
 * Fix the issue where the application would never reach the state where it should read and parse the standard input, regardless if standard input was provided
-* Fix the issue where no variable identifier or value size could be succesfully entered because the trailing bracket was not stripped from the relevant part of a string, and parsing any of the provided values as a number, whether decimal or hexadecimal, would fail for this reason
+* Fix the issue where no variable identifier or value size could be successfully entered because the trailing bracket was not stripped from the relevant part of a string, and parsing any of the provided values as a number, whether decimal or hexadecimal, would fail for this reason
 * Simplify the input-stream parser by applying prior sanitization at the initial reading
 * Change `--write_on_demand` to `--force` (or `-f` in short) and invert the meaning, also change `--reboot` to `--restart`
 * Add `--simulate` (or `-s` in short) simulation mode, where no actual write operations are performed
