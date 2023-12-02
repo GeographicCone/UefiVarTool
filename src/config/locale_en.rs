@@ -79,7 +79,7 @@ Where:
 <Options>: Optional global-scope application settings
   -f --force     Force-write values even if already set as requested
   -h --help      Show usage information (precludes other operations)
-  -r --restart   Upon succesful completion, perform a system restart
+  -r --restart   Upon successful completion, perform a system restart
   -s --simulate  Do not write, only simulate actions (will still read)
 <Op#>: Operation(s) to perform, can be multiple, each in the format:
   <VarName>[(<VarId>)]:<Offset>[(<Size>)][=<Value>]
